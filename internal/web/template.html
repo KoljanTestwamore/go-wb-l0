@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<head>
+  <title>
+    Order {{ .Msg.Order_uid }}
+  </title>
+</head>
+<body>
+  <h1>
+    ID of your order is {{ .Msg.Order_uid }}
+  </h1>
+  <ul id="container">
+  </ul>
+
+<!-- Для меня, как для фронта, проще работать с JSON в родном JS. -->
+<!-- В продакшн проектах со сложной логикой клиент в любом случае будет -->
+<!-- каким то образом обрабатывать данные -->
+  <script>
+    const container = document.querySelector("#container")
+
+    Object.entries(JSON.parse({{ .MsgString }})).forEach(([key, value]) => {
+      const el = document.createElement("li")
+
+      el.innerText = `${key}: ${JSON.stringify(value)}`
+      container.appendChild(el)
+    } )
+  </script>
+</body>
